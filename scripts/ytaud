@@ -1,3 +1,36 @@
-# ytaud - This script downloads high quality .mp3 audio from a YouTube URL ($1) and places it in the user's ~/Music/ folder.
+## ytaud - This script downloads high quality .mp3 audio from a YouTube URL ($1) and places it in the user's ~/Music/ folder.
+## The quality by default is maximum (320kbps?) and I will likely add support for changing this later.
 
-youtube-dl -x --audio-format mp3 --audio-quality 0 --output "$HOME/Music/%(title)s.%(ext)s" $1
+# Color for output
+RED='\033[0;32m'
+NC='\033[0m'
+
+# Show script startup (for better visualization in terminal history)
+echo -e "\n${RED}Beginning YouTube .mp3 rip${NC}"
+
+# Check to see if the user wants to place the .mp3 in a specific directory
+if [[ -z "$2" ]]; then
+	# If not, download the .mp3 to the user's Music folder (if it exists; if not, create it)
+	if [[ -d $HOME/Music/ ]]; then
+		youtube-dl -x --audio-format mp3 --audio-quality 0 --output "$HOME/Music/%(title)s.%(ext)s" $1
+		echo -e "${RED}Successfully downloaded .mp3 file to $HOME/Music/${NC}\n"
+	else
+		# Create user's Music directory if it does not exist
+		echo -e "${RED}No Music directory in HOME folder, creating one now...${NC}\n"
+		mkdir $HOME/Music
+		youtube-dl -x --audio-format mp3 --audio-quality 0 --output "$HOME/Music/%(title)s.%(ext)s" $1
+		echo -e "${RED}Successfully created and downloaded .mp3 to $HOME/Music/${NC}\n"
+	fi
+else
+	# If user-requested directory exists, download to there
+	if [[ -d $2 ]]; then
+		youtube-dl -x --audio-format mp3 --audio-quality 0 --output "$HOME/$2/%(title)s.%(ext)s" $1
+		echo -e "${RED}Successfully downloaded .mp3 file to $HOME/$2/${NC}\n"
+	else
+		# Create the user-requested directory if it does not exist, and then download to there
+		echo -e "${RED}Directory $HOME/$2/ does not exist... Creating now...${NC}"
+		mkdir $HOME/$2
+		youtube-dl -x --audio-format mp3 --audio-quality 0 --output "$HOME/$2/%(title)s.%(ext)s" $1
+		echo -e "${RED}Successfully created and downloaded .mp3 to $HOME/$2/${NC}\n"
+	fi
+fi
