@@ -1,0 +1,3 @@
+# ytaud - This script downloads high quality .mp3 audio from a YouTube URL ($1) and places it in the user's ~/Music/ folder.
+
+youtube-dl -x --audio-format mp3 --audio-quality 0 --output "$HOME/Music/%(title)s.%(ext)s" $1
