@@ -1,6 +1,10 @@
 #!/bin/bash
 
-## ytaud - This script downloads high quality .mp3 audio from a YouTube URL ($1) and places it in the user's ~/Music/ folder.
+### ARGUMENTS:
+# $1 : URL to YouTube Video
+# $2 : (Optional) Folder in $HOME to place .mp3 file
+
+## ytaud - This script downloads high quality .mp3 audio from a YouTube URL ($1) and places it in the user's ~/Music/ folder or $HOME/$2 folder.
 ## The quality by default is maximum (320kbps?) and I will likely add support for changing this later.
 
 # Color for output
