@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# gitaur - A script for downloading from the Arch User Repository (AUR)
+# $1 : AUR Package Name
+
+git clone https://aur.archlinux.org/$1.git ~/Downloads/$1
+cd ~/Downloads/$1
+makepkg -si
+# Remove directory after installing package
+if [ -d $1 ] ; then
+	rm -rf $1
+fi
